@@ -25,6 +25,12 @@ start_page = URL.urlopen('https://teamtreehouse.com')
 # 1. let's create a soup with the source code
 soup = BeautifulSoup(start_page, features='lxml')
 
-# 2. we need to find the links (<a>) with a URL (href=...)
+# 2. we need to find the links (<a>) with a URL (href=...). Mind that if you
+#    don't include the RE, you may also catch internal links.
 for tag in soup('a',  attrs = {'href':re.compile('^http(s)?://')}):
-    print(tag.get('href'))
+    #    We have 2 options now: Open links in new tabs as we find them
+    #                           Or store them in a list and open them later
+    #    To save time, here we'll do the former.
+    webbrowser.open_new_tab(tag.get('href'))
+
+# Tadaa!
